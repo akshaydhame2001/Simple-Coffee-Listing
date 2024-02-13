@@ -1,15 +1,20 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import bgCafe from "./assets/bgCafe.jpg";
 import vector from "./assets/vector.svg";
 
 import Card from "./Components/Card";
 
 const App = () => {
-  const btnFocus = useRef(null);
+  // const btnFocus = useRef(null);
+  const [currentButton, setCurrentButton] = useState("All Products");
 
-  useEffect(() => {
-    btnFocus.current && btnFocus.current.focus();
-  }, [btnFocus]);
+  // useEffect(() => {
+  //   btnFocus.current && btnFocus.current.focus();
+  // }, [btnFocus]);
+
+  const handleButtonClick = (buttonText) => {
+    setCurrentButton(buttonText);
+  };
 
   return (
     <>
@@ -39,20 +44,24 @@ const App = () => {
           <li className="sans flex gap-6 justify-center my-2 sans text-sm text-headingClr font-semibold ">
             <button
               type="button"
-              ref={btnFocus}
-              className="px-3 py-2 hover:bg-body rounded-md focus:bg-body border-none outline-none transition"
+              // ref={btnFocus}
+              onClick={() => handleButtonClick("All Products")}
+              className={`px-3 py-2 hover:bg-body rounded-md ${
+                currentButton === "All Products" ? "bg-body" : ""
+              } border-none outline-none transition`}
             >
               All Products
             </button>
             <button
               type="button"
-              className="px-3 py-2 hover:bg-body rounded-md transition"
+              onClick={() => handleButtonClick("Available Now")}
+              className="px-3 py-2 hover:bg-body rounded-md transition focus:bg-body"
             >
               Available Now
             </button>
           </li>
         </ul>
-        <Card />
+        <Card button={currentButton} />
       </div>
     </>
   );

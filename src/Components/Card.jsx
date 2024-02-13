@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import StarFill from "../assets/Star_fill.svg";
 import Star from "../assets/Star.svg";
 
-const Card = () => {
+const Card = ({ button }) => {
   const [cardData, setCardData] = useState([]);
   useEffect(() => {
     fetch(
@@ -18,9 +18,17 @@ const Card = () => {
       });
   }, []);
 
+  const filteredCardData = cardData.filter((card) => {
+    if (button === "Available Now") {
+      return card.available === true;
+    } else {
+      return true; // Show all products for other cases
+    }
+  });
+
   return (
     <div className="card-container1 mt-8">
-      {cardData.map((card) => (
+      {filteredCardData.map((card) => (
         <article key={card.id} className="relative w-full max-w-[16.25rem]">
           <div>
             {card.popular === true && (
